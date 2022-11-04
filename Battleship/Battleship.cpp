@@ -17,8 +17,8 @@ void SetUpBoard()
     int ships = 0;
     while (ships < maximumships)
     {
-        int x = randomrow;
-        int y = randomcolumn;
+        int x = rand() % rows;
+        int y = rand() % columns;
         if (board[x][y] != 1)
         {
             ships++;
@@ -144,12 +144,17 @@ void Game()
 {
     while (numberofships > 0)
     {
+        int randomrow = rand() % rows;
+        int randomcolumn = rand() % columns;
         Fire(randomrow, randomcolumn);
     }
+
+    std::cout << "All of the ships have been found." << std::endl;
 }
 
 int main()
 {
+    Reset();
     Game();
 }
 
