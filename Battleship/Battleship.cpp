@@ -12,13 +12,6 @@ int board[rows][columns];
 int randomrow = rand() % rows;
 int randomcolumn = rand() % columns;
 
-enum HitMessage
-{
-    HIT,
-    MISS,
-    NEARMISS
-};
-
 void Reset()
 {
     for (int i = 0; i < rows; i++)
@@ -48,46 +41,108 @@ void SetUpBoard()
     }
 }
 
-HitMessage Fire(int x, int y)
+void Search(int x, int y)
 {
+    bool found = false;
+    while (found == false)
+    {
+        if (board[x - 1][y - 1] == 1)
+        {
+            found == true;
+            Fire(x - 1, y - 1);
+        }
+
+        if (board[x][y - 1] == 1)
+        {
+            found == true;
+            Fire(x, y - 1);
+        }
+
+        if (board[x + 1][y - 1] == 1)
+        {
+            found == true;
+            Fire(x + 1, y - 1);
+        }
+
+        if (board[x - 1][y] == 1)
+        {
+            found == true;
+            Fire(x - 1, y);
+        }
+
+        if (board[x + 1][y] == 1)
+        {
+            found == true;
+            Fire(x + 1, y);
+        }
+
+        if (board[x - 1][y + 1] == 1)
+        {
+            found == true;
+            Fire(x - 1, y + 1);
+        }
+
+        if (board[x][y + 1] == 1)
+        {
+            found == true;
+            Fire(x, y + 1);
+        }
+
+        if (board[x + 1][y + 1] == 1)
+        {
+            found == true;
+            Fire(x + 1, y + 1);
+        }
+    }
+}
+
+void Fire(int x, int y)
+{
+    //HIT
     if (board[x][y] == 1)
     {
         numberofships--;
         board[x][y] = 0;
-        return HIT;
+        std::cout << "The computer hit a ship." << std::endl;
     }
 
+    //NEAR MISS
     if (board[x + 1][y] == 1 || board[x - 1][y] == 1)
     {
-        return NEARMISS;
+        std::cout << "The computer almost hit a ship." << std::endl;
+        Search(x, y);
     }
 
     if (board[x][y + 1] == 1 || board[x][y - 1] == 1)
     {
-        return NEARMISS;
+        std::cout << "The computer almost hit a ship." << std::endl;
+        Search(x, y);
     }
 
+    if (board[x + 1][y + 1] == 1 || board[x - 1][y - 1] == 1)
+    {
+        std::cout << "The computer almost hit a ship." << std::endl;
+        Search(x, y);
+    }
+
+    if (board[x - 1][y + 1] == 1 || board[x + 1][y - 1] == 1)
+    {
+        std::cout << "The computer almost hit a ship." << std::endl;
+        Search(x, y);
+    }
+
+    //MISS
     else
     {
-        return MISS;
+        std::cout << "The computer did not hit a ship." << std::endl;
     }
 }
 
-void Recalculate(HitMessage hm)
+void Game()
 {
-    if (hm == HIT)
+    while (numberofships > 0)
     {
-
-    }
-
-    if (hm == NEARMISS)
-    {
-
-    }
-
-    if (hm == MISS)
-    {
-
+        Fire(randomrow, randomcolumn);
     }
 }
 
