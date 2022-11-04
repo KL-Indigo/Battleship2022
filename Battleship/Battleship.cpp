@@ -12,20 +12,6 @@ int board[rows][columns];
 int randomrow = rand() % rows;
 int randomcolumn = rand() % columns;
 
-void Reset()
-{
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < columns; j++)
-        {
-            board[i][j] = 0;
-        }
-    }
-
-    numberofships = 10;
-    SetUpBoard();
-}
-
 void SetUpBoard()
 {
     int ships = 0;
@@ -41,60 +27,21 @@ void SetUpBoard()
     }
 }
 
-void Search(int x, int y)
+void Reset()
 {
-    bool found = false;
-    while (found == false)
+    for (int i = 0; i < rows; i++)
     {
-        if (board[x - 1][y - 1] == 1)
+        for (int j = 0; j < columns; j++)
         {
-            found == true;
-            Fire(x - 1, y - 1);
-        }
-
-        if (board[x][y - 1] == 1)
-        {
-            found == true;
-            Fire(x, y - 1);
-        }
-
-        if (board[x + 1][y - 1] == 1)
-        {
-            found == true;
-            Fire(x + 1, y - 1);
-        }
-
-        if (board[x - 1][y] == 1)
-        {
-            found == true;
-            Fire(x - 1, y);
-        }
-
-        if (board[x + 1][y] == 1)
-        {
-            found == true;
-            Fire(x + 1, y);
-        }
-
-        if (board[x - 1][y + 1] == 1)
-        {
-            found == true;
-            Fire(x - 1, y + 1);
-        }
-
-        if (board[x][y + 1] == 1)
-        {
-            found == true;
-            Fire(x, y + 1);
-        }
-
-        if (board[x + 1][y + 1] == 1)
-        {
-            found == true;
-            Fire(x + 1, y + 1);
+            board[i][j] = 0;
         }
     }
+
+    numberofships = 10;
+    SetUpBoard();
 }
+
+void Search(int x, int y);
 
 void Fire(int x, int y)
 {
@@ -138,6 +85,61 @@ void Fire(int x, int y)
     }
 }
 
+void Search(int x, int y)
+{
+    bool found = false;
+    while (found == false)
+    {
+        if (board[x - 1][y - 1] == 1)
+        {
+            found = true;
+            Fire(x - 1, y - 1);
+        }
+
+        if (board[x][y - 1] == 1)
+        {
+            found = true;
+            Fire(x, y - 1);
+        }
+
+        if (board[x + 1][y - 1] == 1)
+        {
+            found = true;
+            Fire(x + 1, y - 1);
+        }
+
+        if (board[x - 1][y] == 1)
+        {
+            found = true;
+            Fire(x - 1, y);
+        }
+
+        if (board[x + 1][y] == 1)
+        {
+            found = true;
+            Fire(x + 1, y);
+        }
+
+        if (board[x - 1][y + 1] == 1)
+        {
+            found = true;
+            Fire(x - 1, y + 1);
+        }
+
+        if (board[x][y + 1] == 1)
+        {
+            found = true;
+            Fire(x, y + 1);
+        }
+
+        if (board[x + 1][y + 1] == 1)
+        {
+            found = true;
+            Fire(x + 1, y + 1);
+        }
+    }
+}
+
 void Game()
 {
     while (numberofships > 0)
@@ -148,7 +150,7 @@ void Game()
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Game();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
